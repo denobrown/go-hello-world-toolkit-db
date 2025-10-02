@@ -67,46 +67,6 @@ go-http-server-toolkit/
     ├── setup.md
     ├── usage.md
     └── troubleshooting.md
-    ## 🎯 Usage
-
-### Running the Examples
-
-#### Basic Examples
-Run the main demonstration file to see all three approaches:
-
-```bash
-python app.py
-```
-
-This will execute:
-- Example 1: Basic chain without memory
-- Example 2: Manual memory management
-- Example 3: LangChain memory integration
-
-#### Interactive Chat Demo
-For a hands-on conversation experience:
-
-```bash
-python interactive_demo.py --interactive
-```
-
-Commands during chat:
-- Type your questions naturally
-- Type `quit`, `exit`, or `q` to end the session
-- Press `Ctrl+C` to force quit
-```
-## ⚙️ Configuration Options
-
-### Model Configuration
-Adjust the Groq model settings in your code:
-
-```python
-llm = ChatGroq(
-    model="llama3-8b-8192",      # Model name
-    temperature=0.7,              # Creativity (0.0-1.0)
-    max_tokens=300,              # Response length limit
-    api_key=APIKEY               # Your API key
-)
 ```
 
 ## 🔧 Troubleshooting
