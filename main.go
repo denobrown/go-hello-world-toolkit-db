@@ -8,101 +8,142 @@ import (
 	"time"
 )
 
-// Message struct for JSON responses
+// Message represents a JSON response
 type Message struct {
 	Text      string    `json:"text"`
 	Version   string    `json:"version"`
 	Timestamp time.Time `json:"timestamp"`
+	Service   string    `json:"service"`
 }
 
-// HealthCheck struct for health endpoint
+// HealthCheck represents health status
 type HealthCheck struct {
 	Status    string `json:"status"`
 	Timestamp string `json:"timestamp"`
+	Uptime    string `json:"uptime"`
 }
 
-// Handler for the root route
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `
+var startTime = time.Now()
+
+func main() {
+	// Register handlers
+	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/api", apiHandler)
+	http.HandleFunc("/health", healthHandler)
+	http.HandleFunc("/info", infoHandler)
+	http.HandleFunc("/time", timeHandler)
+
+	// Server configuration
+	port := ":8080"
+	
+	fmt.Println("🚀 Go HTTP Server Toolkit - Main Server")
+	fmt.Println("=======================================")
+	fmt.Printf("Server starting on http://localhost%s\n", port)
+	fmt.Println("\nAvailable Endpoints:")
+	fmt.Println("  GET /       - Welcome page")
+	fmt.Println("  GET /api    - JSON API response")
+	fmt.Println("  GET /health - Health check status")
+	fmt.Println("  GET /info   - Server information")
+	fmt.Println("  GET /time   - Current server time")
+	fmt.Println("=======================================")
+	fmt.Println("Moringa AI Capstone Project - Prompt Powered Learning")
+	fmt.Println("Press Ctrl+C to stop the server")
+
+	// Start server
+	log.Fatal(http.ListenAndServe(port, nil))
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	html := `
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<title>Go Hello World</title>
+		<title>Go HTTP Server Toolkit</title>
 		<style>
-			body { font-family: Arial, sans-serif; margin: 40px; }
+			body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
 			.container { max-width: 800px; margin: 0 auto; }
-			.code { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+			.header { background: #00ADD8; color: white; padding: 20px; border-radius: 8px; }
+			.endpoint { background: #f4f4f4; padding: 15px; margin: 10px 0; border-radius: 5px; }
+			.code { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; }
 		</style>
 	</head>
 	<body>
 		<div class="container">
-			<h1>🚀 Welcome to Go!</h1>
-			<p>This is a simple HTTP server written in Go.</p>
-			<div class="code">
-				<strong>Endpoints:</strong><br>
-				• <a href="/">/</a> - This page<br>
-				• <a href="/api">/api</a> - JSON API<br>
-				• <a href="/health">/health</a> - Health check<br>
-				• <a href="/time">/time</a> - Current time
+			<div class="header">
+				<h1>🚀 Go HTTP Server Toolkit</h1>
+				<p>Moringa AI Capstone Project - Prompt Powered Learning</p>
 			</div>
-			<p><em>Server is running on Go version 1.21+</em></p>
+			
+			<h2>Welcome to the Main Server</h2>
+			<p>This server demonstrates basic HTTP server capabilities in Go.</p>
+			
+			<h3>Available Endpoints:</h3>
+			<div class="endpoint">
+				<strong>GET /</strong> - This welcome page<br>
+				<strong>GET /api</strong> - JSON API response<br>
+				<strong>GET /health</strong> - Health check status<br>
+				<strong>GET /info</strong> - Server information<br>
+				<strong>GET /time</strong> - Current server time
+			</div>
+			
+			<h3>Project Structure:</h3>
+			<div class="code">
+				go-http-server-toolkit/<br>
+				├── basic-server/     # Simple HTTP server<br>
+				├── advanced-server/  # Enhanced features<br>
+				├── examples/         # Additional examples<br>
+				├── docs/            # Documentation<br>
+				└── main.go          # This server
+			</div>
+			
+			<p><em>Explore the different server implementations in their respective directories!</em></p>
 		</div>
 	</body>
 	</html>
-	`)
+	`
+	fmt.Fprintf(w, html)
 }
 
-// Handler for API endpoint
 func apiHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	
 	response := Message{
-		Text:      "Hello from the Go API!",
-		Version:   "1.0",
+		Text:      "Welcome to the Go HTTP Server Toolkit API",
+		Version:   "1.0.0",
 		Timestamp: time.Now(),
+		Service:   "main-server",
 	}
 	
 	json.NewEncoder(w).Encode(response)
 }
 
-// Handler for health check
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	
 	health := HealthCheck{
 		Status:    "healthy",
 		Timestamp: time.Now().Format(time.RFC3339),
+		Uptime:    time.Since(startTime).String(),
 	}
 	
 	json.NewEncoder(w).Encode(health)
 }
 
-// Handler for current time
-func timeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Current server time: %s", time.Now().Format("2006-01-02 15:04:05 MST"))
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	info := map[string]interface{}{
+		"service":     "Go HTTP Server Toolkit - Main Server",
+		"version":     "1.0.0",
+		"go_version":  "1.21+",
+		"project":     "Moringa AI Capstone",
+		"start_time":  startTime.Format(time.RFC3339),
+		"endpoints":   []string{"/", "/api", "/health", "/info", "/time"},
+	}
+	
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(info)
 }
 
-func main() {
-	// Define routes
-	http.HandleFunc("/", helloHandler)
-	http.HandleFunc("/api", apiHandler)
-	http.HandleFunc("/health", healthHandler)
-	http.HandleFunc("/time", timeHandler)
-	
-	// Server configuration
-	port := ":8080"
-	
-	// Print startup message
-	fmt.Printf("Starting Go HTTP server on http://localhost%s\n", port)
-	fmt.Println("==========================================")
-	fmt.Println("Available endpoints:")
-	fmt.Println("  GET /      - Welcome page")
-	fmt.Println("  GET /api   - JSON API response")
-	fmt.Println("  GET /health- Health check status")
-	fmt.Println("  GET /time  - Current server time")
-	fmt.Println("==========================================")
-	fmt.Println("Press Ctrl+C to stop the server")
-	
-	// Start server
-	log.Fatal(http.ListenAndServe(port, nil))
+func timeHandler(w http.ResponseWriter, r *http.Request) {
+	currentTime := time.Now().Format("Monday, January 2, 2006 at 3:04:05 PM MST")
+	fmt.Fprintf(w, "Server Time: %s\nUptime: %s", currentTime, time.Since(startTime))
 }

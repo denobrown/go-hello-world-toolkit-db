@@ -1,29 +1,20 @@
-# 🚀 Go Hello World Toolkit
+# 🚀 Go HTTP Server Toolkit
 
-A beginner-friendly Go (Golang) HTTP server example created as part of the Moringa AI Capstone Project.
+A comprehensive collection of Go HTTP server examples for beginners. Built as part of the Moringa AI Capstone Project to demonstrate prompt-powered learning.
 
-## 📋 Project Overview
+![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+![Moringa AI](https://img.shields.io/badge/Moringa-AI_Capstone-orange?style=for-the-badge)
 
-This project demonstrates how to create a simple HTTP server in Go with multiple endpoints, JSON responses, and HTML content.
+## 📋 Overview
 
-## 🎯 Learning Objectives
+This toolkit provides practical examples of building HTTP servers in Go, from basic implementations to advanced features with middleware and custom handlers.
 
-- Set up a Go development environment
-- Create a basic HTTP server
-- Handle different routes and endpoints
-- Return JSON responses
-- Understand Go's concurrency model
-- Build and deploy a Go application
+## 🎯 Features
 
-## 🛠️ Prerequisites
+- **Basic HTTP Server** - Simple "Hello World" server
+- **Advanced Server** - Middleware, logging, and statistics
+- **Multiple Examples** - Various use cases and patterns
+- **Comprehensive Documentation** - Setup, usage, and troubleshooting
 
-- Go 1.21 or higher
-- Git
-- A text editor (VS Code recommended)
-
-## ⚡ Quick Start
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/go-hello-world-toolkit.git
-cd go-hello-world-toolkit
+## 🏗️ Project Structure
