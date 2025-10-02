@@ -94,23 +94,6 @@ Commands during chat:
 - Type your questions naturally
 - Type `quit`, `exit`, or `q` to end the session
 - Press `Ctrl+C` to force quit
-
-### Code Examples
-
-#### Basic Chain (No Memory)
-```python
-from langchain_groq import ChatGroq
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-
-llm = ChatGroq(model="llama3-8b-8192", temperature=0.7)
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful assistant."),
-    ("human", "{question}")
-])
-chain = prompt | llm | StrOutputParser()
-
-response = chain.invoke({"question": "What is Python?"})
 ```
 ## ⚙️ Configuration Options
 
@@ -125,20 +108,6 @@ llm = ChatGroq(
     api_key=APIKEY               # Your API key
 )
 ```
-
-### Memory Types
-LangChain offers different memory types:
-
-- **ConversationBufferMemory**: Stores all conversation history
-- **ConversationSummaryBufferMemory**: Summarizes old messages when buffer gets too long
-- **ConversationSummaryMemory**: Keeps a summary of the conversation
-
-### Available Models
-Groq supports several models:
-- `llama3-8b-8192` (default)
-- `llama3-70b-8192`
-- `mixtral-8x7b-32768`
-- `gemma-7b-it`
 
 ## 🔧 Troubleshooting
 
